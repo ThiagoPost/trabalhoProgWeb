@@ -26,7 +26,7 @@ const CarTable = ({ cars }) => {
             <td>{car.ano}</td>
             <td>{car.cor}</td>
             <td>{car.placa}</td>
-            <td>{car.preco_locacao_dia}</td>
+            <td> R$: {car.preco_locacao_dia}</td>
             <td>{car.disponibilidade ? 'Disponível' : 'Indisponível'}</td>
             <td>
                 <button className={styles.editButton}>Editar</button>

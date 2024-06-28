@@ -11,13 +11,35 @@ export default async function handler(req, res) {
     port: process.env.DB_PORT,
   });
 
-  try {
-    await client.connect();
-    const result = await client.query('SELECT * FROM carro');
-    await client.end();
-    res.status(200).json(result.rows);
-  } catch (error) {
-    console.error('Error executing query', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+  await client.connect();
+
+  if (req.method === 'GET') {
+    try {
+      const result = await client.query('SELECT * FROM carro');
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Error executing query', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+      await client.end();
+    }
+  } else if (req.method === 'POST') {
+    const { modelo, marca, ano, cor, placa, preco_locacao_dia, disponibilidade } = req.body;
+
+    try {
+      const result = await client.query(
+        'INSERT INTO carro (modelo, marca, ano, cor, placa, preco_locacao_dia, disponibilidade) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+        [modelo, marca, ano, cor, placa, preco_locacao_dia, disponibilidade]
+      );
+      res.status(201).json(result.rows[0]);
+    } catch (error) {
+      console.error('Error executing query', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+      await client.end();
+    }
+  } else {
+    res.setHeader('Allow', ['GET', 'POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
