@@ -1,0 +1,42 @@
+/* styles/CarForm.module.css */
+.carForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .carForm label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    display: flex;
+    margin-top: 5px;
+  }
+  
+  .carForm input,
+  .carForm select {
+    width: 95%;
+    padding: 8px;
+    margin-top: 0px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: 5px;
+  }
+  
+  .carForm button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .carForm button:hover {
+    background-color: #45a049;
+  }
+  

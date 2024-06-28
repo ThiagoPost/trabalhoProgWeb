@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <ul className={styles.navList}>
         <NavbarItem href="/">Home</NavbarItem>
-        <NavbarItem href="/teste/primeiro">teste</NavbarItem>
+        <NavbarItem href="/add-car">Cadastrar</NavbarItem>
         <NavbarItem href="/cars">Lista de Carros</NavbarItem>
       </ul>
     </nav>
