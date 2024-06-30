@@ -16,7 +16,7 @@ const AddCar = () => {
       });
 
       if (response.ok) {
-        router.push('/cars');
+        router.replace('/cars');
       } else {
         console.error('Failed to add car');
       }
