@@ -1,37 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import CarTable from '../../components/CarTable';
-import Link from 'next/link';
-import styles from '../styles/CarTable.module.css'; // Adicione um novo arquivo CSS para estilos específicos
+
 
 const Cars = () => {
   const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await fetch('/api/test-connection');
+        const data = await response.json();
+        setCars(data);
+      } catch (error) {
+        console.error('Error fetching cars:', error);
+      }
+    };
+
     fetchCars();
   }, []);
 
-  const fetchCars = async () => {
+  const handleDeleteCar = async (id) => {
     try {
-      const response = await fetch('/api/test-connection');
-      const data = await response.json();
-      setCars(data);
-      setLoading(false);
+      const response = await fetch('/api/test-connection', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        setCars(cars.filter(car => car.id_carro !== id));
+      } else {
+        console.error('Failed to delete car');
+      }
     } catch (error) {
-      console.error('Error fetching cars:', error);
-      setError('Failed to load cars');
-      setLoading(false);
+      console.error('Error deleting car:', error);
     }
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
 
   return (
     <div>
@@ -44,9 +50,8 @@ const Cars = () => {
         marginBottom: "20px"
       }}>
         <h1>Lista de Carros</h1>
-        
       </div>
-      <CarTable cars={cars} />
+      <CarTable cars={cars} onDelete={handleDeleteCar} />
     </div>
   );
 };

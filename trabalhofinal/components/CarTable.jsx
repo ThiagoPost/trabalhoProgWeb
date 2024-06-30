@@ -2,7 +2,14 @@
 import styles from '../src/styles/CarTable.module.css';
 import Link from 'next/link';
 
-const CarTable = ({ cars }) => {
+const CarTable = ({ cars, onDelete }) => {
+  
+  const handleDeleteClick = (id) => {
+    const isConfirmed = window.confirm('Você tem certeza que deseja excluir este carro?');
+    if (isConfirmed) {
+      onDelete(id);
+    }
+  };
   return (
     <table className={styles.carTable}>
       <thead>
@@ -31,9 +38,9 @@ const CarTable = ({ cars }) => {
             <td>{car.disponibilidade ? 'Disponível' : 'Indisponível'}</td>
             <td>
               <Link href={`/edit-car/${car.id_carro}`} legacyBehavior>
-                <a className={styles.editButton}>Editar</a>
+                <button className={styles.editButton}>Editar</button>
               </Link>
-                <button className={styles.deleteButton}>Excluir</button>
+              <button className={styles.deleteButton} onClick={() => handleDeleteClick(car.id_carro)}>Excluir</button>
             </td>
           </tr>
         ))}
