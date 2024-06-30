@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CarForm from '../../../components/CarForm';
-import styles from '../../styles/EditCar.module.css';
+
 
 const EditCar = () => {
   const router = useRouter();
@@ -52,8 +52,17 @@ const EditCar = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1>Editar Carro</h1>
+    <div>
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        fontWeight: "bold",
+        fontSize: "25px",
+        marginTop: "4px%",
+        marginBottom: "20px"
+      }}>
+        <h1>Editar Carro</h1>
+      </div>
       {car && <CarForm initialData={car} onSubmit={handleEditCar} />}
     </div>
   );
