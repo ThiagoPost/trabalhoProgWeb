@@ -1,5 +1,6 @@
 // components/CarTable.js
 import styles from '../src/styles/CarTable.module.css';
+import Link from 'next/link';
 
 const CarTable = ({ cars }) => {
   return (
@@ -29,7 +30,9 @@ const CarTable = ({ cars }) => {
             <td> R$: {car.preco_locacao_dia}</td>
             <td>{car.disponibilidade ? 'Disponível' : 'Indisponível'}</td>
             <td>
-                <button className={styles.editButton}>Editar</button>
+              <Link href={`/edit-car/${car.id_carro}`} legacyBehavior>
+                <a className={styles.editButton}>Editar</a>
+              </Link>
                 <button className={styles.deleteButton}>Excluir</button>
             </td>
           </tr>
